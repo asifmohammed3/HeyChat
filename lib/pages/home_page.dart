@@ -12,11 +12,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final GetIt _getIt= GetIt.instance;
+  final GetIt _getIt = GetIt.instance;
   late AuthService _authService;
   late NavigationService _navigationService;
   late AlertService _alertService;
-
 
   @override
   void initState() {
@@ -34,16 +33,17 @@ class _HomePageState extends State<HomePage> {
         title: const Text("Messages"),
         actions: [
           IconButton(
-            color:Colors.red,
+              color: Colors.red,
               onPressed: () async {
                 bool result = await _authService.logout();
-                if(result){
-                  _alertService.showToast(text: "Successfully logged Out",icon: Icons.check);
+                if (result) {
+                  _alertService.showToast(
+                      text: "Successfully logged Out", icon: Icons.check);
                   _navigationService.pushReplacementNamed("/login");
-
                 }
-               },
-              icon: const Icon(Icons.logout))],
+              },
+              icon: const Icon(Icons.logout))
+        ],
       ),
     );
   }

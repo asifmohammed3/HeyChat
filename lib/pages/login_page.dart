@@ -5,7 +5,6 @@ import 'package:heychat/services/alert_service.dart';
 import 'package:heychat/services/navigation_service.dart';
 import 'package:heychat/services/services.dart';
 import 'package:heychat/widgets/cust_form_field.dart';
-import 'package:path/path.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -15,7 +14,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   final GetIt _getIt = GetIt.instance;
 
   final GlobalKey<FormState> _loginFormKey = GlobalKey();
@@ -23,15 +21,15 @@ class _LoginPageState extends State<LoginPage> {
   late NavigationService _navigationService;
   late AlertService _alertService;
 
-  String? email,password;
+  String? email, password;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _authService = _getIt.get<AuthService>();
-    _navigationService =_getIt.get<NavigationService>();
-    _alertService= _getIt.get<AlertService>();
+    _navigationService = _getIt.get<NavigationService>();
+    _alertService = _getIt.get<AlertService>();
   }
 
   @override
@@ -96,8 +94,8 @@ class _LoginPageState extends State<LoginPage> {
               hintText: "Email",
               height: MediaQuery.sizeOf(context).height * 0.1,
               validationRegEx: EMAIL_VALIDATION_REGEX,
-              onSaved: (val){
-                email=val;
+              onSaved: (val) {
+                email = val;
               },
             ),
             CustFormField(
@@ -105,8 +103,8 @@ class _LoginPageState extends State<LoginPage> {
               height: MediaQuery.sizeOf(context).height * 0.1,
               validationRegEx: PASSWORD_VALIDATION_REGEX,
               obscureText: true,
-              onSaved: (val){
-                password=val;
+              onSaved: (val) {
+                password = val;
               },
             ),
             _loginButton(context)
@@ -120,15 +118,16 @@ class _LoginPageState extends State<LoginPage> {
     return SizedBox(
       width: MediaQuery.sizeOf(context).width,
       child: MaterialButton(
-        onPressed: () async{
-          if(_loginFormKey.currentState?.validate() ?? false){
+        onPressed: () async {
+          if (_loginFormKey.currentState?.validate() ?? false) {
             _loginFormKey.currentState?.save();
-            bool result=await _authService.login(email!,password!);
+            bool result = await _authService.login(email!, password!);
             print(result);
-            if(result){
+            if (result) {
               _navigationService.pushReplacementNamed("/home");
-            }else{
-              _alertService.showToast(text: "Failed to login,Please try again!");
+            } else {
+              _alertService.showToast(
+                  text: "Failed to login,Please try again!", icon: Icons.error);
             }
           }
         },
@@ -149,7 +148,12 @@ class _LoginPageState extends State<LoginPage> {
         mainAxisSize: MainAxisSize.max,
         children: [
           Text("Don't have an account? "),
-          Text("Sign Up", style: TextStyle(fontWeight: FontWeight.w800))
+          GestureDetector(
+              onTap: () {
+                _navigationService.pushNamed("/register");
+              },
+              child: Text("Sign Up",
+                  style: TextStyle(fontWeight: FontWeight.w800)))
         ],
       ),
     );

@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:heychat/pages/home_page.dart';
 import 'package:heychat/pages/login_page.dart';
 import 'package:heychat/pages/register_page.dart';
@@ -29,6 +29,10 @@ class NavigationService {
 
   void pushReplacementNamed(String routeName) {
     _navigatorKey.currentState?.pushReplacementNamed(routeName);
+  }
+
+  void push(MaterialPageRoute route) {
+    _navigatorKey.currentState?.push(route);
   }
 
   void goBack() {
